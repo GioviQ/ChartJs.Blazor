@@ -1,0 +1,57 @@
+﻿@using ChartJs.Blazor.Charts
+@using ChartJs.Blazor.ChartJS.GaugeChart
+@using ChartJs.Blazor.ChartJS.Common.Properties
+@using ChartJs.Blazor.Util
+
+<h1>Gauge Chart</h1>
+
+<Chart @ref="_gaugeChartJs"
+        Config="@_config"
+        TConfig="GaugeConfig"
+        Width="600"
+        Height="300"/>
+
+@code {
+    private GaugeConfig _config;
+    private Chart<GaugeConfig> _gaugeChartJs;
+    private Random rand = new Random();
+
+    protected override void OnInitialized()
+    {
+        _config = new GaugeConfig
+        {
+            Options = new GaugeOptions()
+            {
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = "Sample chart from Blazor"
+                },
+                Responsive = true,
+                Animation = new ArcAnimation
+                {
+                    AnimateRotate = true,
+                    AnimateScale = true
+                }
+            }
+        };
+
+        _config.Data.Labels.AddRange(new[] { "A", "B", "C", "D" });
+
+        var gaugeSet = new GaugeDataset
+        {
+            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
+            BorderWidth = 0,
+            HoverBackgroundColor = ColorUtil.RandomColorString(),
+            HoverBorderColor = ColorUtil.RandomColorString(),
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
+
+        gaugeSet.AddRange(new double[] { 1, 2, 3, 4 });
+        _config.Data.Datasets.Add(gaugeSet);
+
+        gaugeSet.Value = gaugeSet.Data.Max() * rand.NextDouble();
+    }
+
+}

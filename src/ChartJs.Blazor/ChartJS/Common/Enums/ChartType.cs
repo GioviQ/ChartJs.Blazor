@@ -31,6 +31,11 @@
         public static ChartType Doughnut => new ChartType("doughnut");
 
         /// <summary>
+        /// The gauge chart type.
+        /// </summary>
+        public static ChartType Gauge => new ChartType("gauge");
+
+        /// <summary>
         /// The radar chart type.
         /// </summary>
         public static ChartType Radar => new ChartType("radar");
